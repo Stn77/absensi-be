@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('riwayat_absens', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->date('tanggal');
+            $table->string('hari');
+            $table->enum('is_late', ['Terlambat', 'Tepat Waktu'])->default('Tepat Waktu');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

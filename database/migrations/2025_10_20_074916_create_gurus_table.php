@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('gurus', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->unique(); // tiap guru punya 1 akun user
+            $table->string('name');
+            $table->string('nip');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
