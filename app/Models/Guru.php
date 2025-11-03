@@ -9,4 +9,9 @@ class Guru extends Model
 {
     /** @use HasFactory<\Database\Factories\GuruFactory> */
     use HasFactory;
+
+     public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->unique(); // tiap siswa punya 1 akun user
             $table->string('name');
             $table->string('nisn');
-            $table->string('rf_id');
+            $table->string('rf_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
