@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\API\Flutter\Auth\AnrdAuthController;
+use App\Http\Controllers\API\IoT\Absensi;
+use App\Http\Controllers\API\IoT\Auth\DeviceAuthController;
+use App\Http\Controllers\API\Test\Auth as TestAuth;
+use App\Http\Controllers\API\Test\BarangController;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/hallo', function (Request $request) {
@@ -10,4 +17,32 @@ Route::get('/hallo', function (Request $request) {
         'userId' => 1,
         'id' => 10,
     ]);
+});
+
+Route::prefix('iot/absen')->group(function () {
+    Route::post('/submit', [Absensi::class, 'absen'])->name('send.absen');
+    Route::post('/login', [DeviceAuthController::class, 'login']);
+    Route::post('/register', [DeviceAuthController::class, 'register']);
+    Route::post('/logout', [DeviceAuthController::class, 'logout'])->middleware('auth:sanctum');
+});
+
+Route::prefix('anrd/absen')->group(function () {
+    Route::post('/login', [AnrdAuthController::class, 'login']);
+});
+
+// ⭐ PENTING: Route Login (tanpa middleware)
+Route::post('/test/login', [TestAuth::class, 'login']);
+
+// ⭐ PENTING: Route yang memerlukan autentikasi (sanctum)
+Route::prefix('test')->middleware('auth:sanctum')->group(function () {
+    // User info
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    // Logout
+    Route::post('/logout', [TestAuth::class, 'logout']);
+
+    // ⭐ PENTING: CRUD Barang
+    Route::apiResource('barang', BarangController::class);
 });
