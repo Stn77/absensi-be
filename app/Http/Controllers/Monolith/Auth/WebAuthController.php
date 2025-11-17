@@ -61,8 +61,8 @@ class WebAuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate(); // Invalidates the current session
-        $request->session()->regenerateToken(); // Regenerates the CSRF token for the next session
+        $request->session()->invalidate(); 
+        $request->session()->regenerateToken();
         return redirect()->route('login');
     }
 

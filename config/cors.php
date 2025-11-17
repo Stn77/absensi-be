@@ -4,7 +4,7 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['POST', 'GET', 'PUT'],
+    'allowed_methods' => ['*'],
 
     'allowed_origins' => ['*'], // Izinkan semua origin (untuk development)
     // Untuk production, ganti dengan domain spesifik:

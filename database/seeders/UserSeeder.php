@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         $admin = Role::create(['name' => 'admin']);
         $guru = Role::create(['name' => 'guru']);
         $siswa = Role::create(['name' => 'siswa']);
-        $scanner = Role::create(['name' => 'scanner']);
+        // $scanner = Role::create(['name' => 'scanner']);
 
         User::create([
             'name' => 'admin',
