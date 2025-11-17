@@ -5,6 +5,7 @@ use App\Http\Controllers\API\IoT\Absensi;
 use App\Http\Controllers\API\IoT\Auth\DeviceAuthController;
 use App\Http\Controllers\API\Test\Auth as TestAuth;
 use App\Http\Controllers\API\Test\BarangController;
+use App\Http\Controllers\WhatsAppController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,3 +47,11 @@ Route::prefix('test')->middleware('auth:sanctum')->group(function () {
     // ⭐ PENTING: CRUD Barang
     Route::apiResource('barang', BarangController::class);
 });
+
+// API untuk WhatsApp
+Route::prefix('whatsapp')->group(function () {
+    Route::post('/send', [WhatsAppController::class, 'apiSend']);
+    Route::post('/send-bulk', [WhatsAppController::class, 'sendBulk']);
+});
+
+// Route::prefix('');
