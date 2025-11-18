@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\Flutter\Absensi as FlutterAbsensi;
 use App\Http\Controllers\API\Flutter\Auth\AnrdAuthController;
+use App\Http\Controllers\API\Flutter\Profile;
 use App\Http\Controllers\API\IoT\Absensi;
 use App\Http\Controllers\API\IoT\Auth\DeviceAuthController;
 use App\Http\Controllers\API\Test\Auth as TestAuth;
@@ -54,4 +56,11 @@ Route::prefix('whatsapp')->group(function () {
     Route::post('/send-bulk', [WhatsAppController::class, 'sendBulk']);
 });
 
-// Route::prefix('');
+Route::prefix('user')->middleware('auth:sanctum')->group(function (){
+    Route::get('profile', [Profile::class, 'index']);
+});
+
+Route::prefix('absen')->middleware('auth:sanctum')->group(function () {
+    Route::post('/submit', [FlutterAbsensi::class, 'absen']);
+    Route::get('/history', [FlutterAbsensi::class, 'history']);
+});
