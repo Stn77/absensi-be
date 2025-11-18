@@ -13,11 +13,17 @@ return new class extends Migration
     {
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique(); // tiap siswa punya 1 akun user
-            $table->string('name');
-            $table->string('nisn');
-            $table->string('rf_id')->nullable();
+            $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('name');
+            $table->string('nisn')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('nik')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('no_telepon')->nullable();
+            $table->string('foto')->nullable();
+            $table->string('jenis_kelamin')->nullable();
             $table->timestamps();
         });
     }

@@ -10,6 +10,20 @@ class Siswa extends Model
 {
     /** @use HasFactory<\Database\Factories\SiswaFactory> */
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'name',
+        'nisn',
+        'alamat',
+        'nik',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'no_telepon',
+        'jenis_kelamin',
+        'foto',
+        'kelas_id',
+        'jurusan_id',
+    ];
 
     public function kelas()
     {
