@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AnrdAuthController extends Controller
 {
@@ -34,7 +35,7 @@ class AnrdAuthController extends Controller
         ], 200);
     }
 
-    // ⭐ PENTING: Fungsi Logout
+
     public function logout(Request $request)
     {
         // Hapus token yang sedang digunakan

@@ -58,8 +58,9 @@ Route::prefix('user')->middleware('auth:sanctum')->group(function (){
 
 Route::prefix('/absen')->group(function () {
     Route::post('/login', [AnrdAuthController::class, 'login']);
-    Route::post('/logout', [AnrdAuthController::class, 'logout']);
 });
+
+Route::post('/absen/logout', [AnrdAuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::prefix('absen')->middleware('auth:sanctum')->group(function () {
     Route::post('/submit', [FlutterAbsensi::class, 'absen']);
