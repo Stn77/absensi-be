@@ -27,7 +27,7 @@
             background-color: white;
         }
         .logo-section {
-            background: linear-gradient(135deg, #6f5a75 0%, #8a7090 100%);
+            background: linear-gradient(135deg, #00A952 0%, #00D469 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -40,14 +40,14 @@
             margin-bottom: 1.5rem;
         }
         .btn-login {
-            background-color: #6f5a75;
+            background-color: #00D469;
             border: none;
             padding: 12px;
             font-weight: 600;
             transition: background-color 0.3s;
         }
         .btn-login:hover {
-            background-color: #5a485f;
+            background-color: #00A952;
         }
         .form-control {
             padding: 12px 15px;
@@ -55,7 +55,7 @@
             border: 1px solid #ddd;
         }
         .form-control:focus {
-            border-color: #6f5a75;
+            border-color: #45FF8C;
             box-shadow: 0 0 0 0.2rem rgba(111, 90, 117, 0.25);
         }
         .form-label {
@@ -92,10 +92,14 @@
 
                 <div class="divider"></div>
 
-                <form id="loginForm">
+                <form id="loginForm" method="POST" action="{{route('login.submit')}}">
+                    @csrf
                     <!-- Email -->
                     <div class="mb-4">
                         <label for="email" class="form-label">Email</label>
+                        @error('email')
+                        <div class="text-danger">{{$message}}</div>
+                        @enderror
                         <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan email Anda" required>
                         <div class="invalid-feedback">Harap masukkan email yang valid</div>
                     </div>
@@ -103,28 +107,20 @@
                     <!-- Password -->
                     <div class="mb-4">
                         <label for="password" class="form-label">Password</label>
+                        @error('password')
+                        <div class="text-danger">{{$message}}</div>
+                        @enderror
                         <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan password Anda" required>
                         <div class="invalid-feedback">Harap masukkan password</div>
                     </div>
 
-                    <!-- Remember Me & Forgot Password -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">
-                                Ingat saya
-                            </label>
-                        </div>
-                        <a href="#" class="text-decoration-none" style="color: #6f5a75;">Lupa password?</a>
-                    </div>
-
                     <!-- Login Button -->
-                    <button type="submit" class="btn btn-login text-white w-100 py-3 fw-semibold">Login</button>
+                    <button type="submit" class="btn btn-login text-white w-100 py-3 fw-semibold mt-2">Login</button>
 
                     <!-- Register Link -->
-                    <div class="text-center mt-4">
-                        <p class="text-muted">Belum punya akun? <a href="#" class="text-decoration-none fw-semibold" style="color: #6f5a75;">Daftar di sini</a></p>
-                    </div>
+                    {{-- <div class="text-center mt-4">
+                        <p class="text-muted">Belum punya akun? <a href="#" class="text-decoration-none fw-semibold" style="color: #005828;">Daftar di sini</a></p>
+                    </div> --}}
                 </form>
             </div>
 
@@ -146,43 +142,43 @@
 
     <script>
         // Form validation
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // document.getElementById('loginForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
 
-            const email = document.getElementById('email');
-            const password = document.getElementById('password');
-            let isValid = true;
+        //     const email = document.getElementById('email');
+        //     const password = document.getElementById('password');
+        //     let isValid = true;
 
-            // Reset validation states
-            email.classList.remove('is-invalid');
-            password.classList.remove('is-invalid');
+        //     // Reset validation states
+        //     email.classList.remove('is-invalid');
+        //     password.classList.remove('is-invalid');
 
-            // Email validation
-            if (!email.value || !isValidEmail(email.value)) {
-                email.classList.add('is-invalid');
-                isValid = false;
-            }
+        //     // Email validation
+        //     if (!email.value || !isValidEmail(email.value)) {
+        //         email.classList.add('is-invalid');
+        //         isValid = false;
+        //     }
 
-            // Password validation
-            if (!password.value) {
-                password.classList.add('is-invalid');
-                isValid = false;
-            }
+        //     // Password validation
+        //     if (!password.value) {
+        //         password.classList.add('is-invalid');
+        //         isValid = false;
+        //     }
 
-            if (isValid) {
-                // Simulate login process
-                const submitBtn = document.querySelector('.btn-login');
-                const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Memproses...';
-                submitBtn.disabled = true;
+        //     if (isValid) {
+        //         // Simulate login process
+        //         const submitBtn = document.querySelector('.btn-login');
+        //         const originalText = submitBtn.textContent;
+        //         submitBtn.textContent = 'Memproses...';
+        //         submitBtn.disabled = true;
 
-                setTimeout(() => {
-                    alert('Login berhasil! (Ini hanya simulasi)');
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, 1500);
-            }
-        });
+        //         setTimeout(() => {
+        //             alert('Login berhasil! (Ini hanya simulasi)');
+        //             submitBtn.textContent = originalText;
+        //             submitBtn.disabled = false;
+        //         }, 1500);
+        //     }
+        // });
 
         function isValidEmail(email) {
             const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

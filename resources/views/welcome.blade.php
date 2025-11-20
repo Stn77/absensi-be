@@ -65,11 +65,11 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mx-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
         <a class="navbar-brand" href="#">
             <img src="{{asset('assets/logo/Group 2 (1).png')}}" alt="Logo" width="30" height="30"
                 class="d-inline-block align-text-top">
-            Bootstrap
+            Prima Score
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,7 @@
                 </li>
             </ul>
             <div class="d-flex">
-                <a class="btn btn-primary text-light mx-2">
+                <a class="btn btn-primary text-light mx-2" href="{{route('login.page')}}">
                     Login
                 </a>
                 <a class="btn btn-outline-primary mx-2">
@@ -117,12 +117,11 @@
         <div class="px-4 pt-5 my-5 text-center border-bottom hero">
             <h1 class="display-4 fw-bold">
                 <img src="{{asset('assets/img-assets/mini-items/star.png')}}" alt="" width="30" height="30"
-                    class="mini-star"> Centered screenshot
+                    class="mini-star"> Prima Score
             </h1>
             <div class="col-lg-6 mx-auto">
-                <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the
-                    world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive
-                    grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+                <p class="lead mb-4">Aplikasi monitor kehadiran siswa secara realtime dan akurat. Disertai juga beberapa
+                    fitur pendukung untuk rekap absensi. </p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
                     <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Primary button</button>
                     <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
@@ -141,29 +140,45 @@
     <div class="container col-xl-10 col-xxl-8 px-4 py-5">
         <div class="row align-items-center g-lg-5 py-5">
             <div class="col-lg-7 text-center text-lg-start">
-                <h1 class="display-4 fw-bold lh-1 mb-3">Vertically centered hero sign-up form</h1>
-                <p class="col-lg-10 fs-4">Below is an example form built entirely with Bootstrap’s form controls. Each
-                    required form group has a validation state that can be triggered by attempting to submit the form
-                    without completing it.</p>
+                <h1 class="display-4 fw-bold lh-1 mb-3">Daftar dan nikmati fitur yang tersedia</h1>
+                <p class="col-lg-10 fs-4">Setelah anda daftar silahkan login dan Anda dapat menikmati fitur dan layanan Prima Score</p>
             </div>
             <div class="col-md-10 mx-auto col-lg-5">
-                <form class="p-4 p-md-5 border rounded-3 bg-light">
+                <form class="p-4 p-md-5 border rounded-3 bg-light" id="registerForm" action="{{route('register.submit')}}"
+                    method="POST">
+                    @csrf
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Email address</label>
+                        @error('name')
+                        <div class="text-danger">{{$message}}</div>
+                        @enderror
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                            placeholder="Nama Lengkap" name="name" value="{{ old('name') }}">
+                        <label for="name">Nama Lengkap</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
+                        @error('email')
+                        <div class="text-danger">{{$message}}</div>
+                        @enderror
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                            placeholder="name@example.com" name="email" value="{{ old('email') }}">
+                        <label for="email">Alamat Email</label>
                     </div>
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" value="remember-me"> Remember me
-                        </label>
+                    <div class="form-floating mb-3">
+                        @error('password')
+                        <div class="text-danger">{{$message}}</div>
+                        @enderror
+                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                            id="password" placeholder="Password" name="password">
+                        <label for="password">Password</label>
                     </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password_confirmation"
+                            placeholder="Konfirmasi Password" name="password_confirmation">
+                        <label for="password_confirmation">Konfirmasi Password</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Daftar</button>
                     <hr class="my-4">
-                    <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+                    <small class="text-muted">Dengan anda daftar, anda setuju dengan kebijakan dan layanan kami</small>
                 </form>
             </div>
         </div>

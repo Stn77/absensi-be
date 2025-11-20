@@ -7,23 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title ?? config('app.name')}}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"> --}}
-    @if (config('app.env') !== 'production')
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link href="{{ asset('assets/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/datatables/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/fontawesome/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/datatables/dataTables.bootstrap5.min.css') }}">
-    @else
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    @endif
-        <style>
+    <style>
         /* Styling untuk sidebar responsif */
         .app-wrapper {
             display: flex;
@@ -114,14 +103,14 @@
             width: 280px;
             transition: all 0.3s;
             z-index: 1000;
-            background-color: #ffffff; /* sidebar putih biar clean */
-            border-right: 1px solid #e2e8f0; /* garis halus */
+            /* background-color: #ffffff; */
+            border-right: 1px solid #e2e8f0;
         }
 
         .sidebar-brand {
             padding: 1rem;
             text-align: center;
-            border-bottom: 1px solid #e2e8f0;
+            /* border-bottom: 1px solid; */
         }
 
         .sidebar-content {
@@ -133,22 +122,21 @@
         /* Menu utama */
         .crazy-nav {
             font-weight: 500;
-            color: #1E293B; /* teks abu gelap */
             transition: background-color 0.2s, color 0.2s;
         }
 
         .crazy-nav:hover {
-            background-color: #f1f5f9; /* hover abu muda */
-            color: #2563EB; /* teks biru saat hover */
+            background-color: #f1f5f9;
+            color: #2563EB;
         }
 
         .bg-active {
-            background-color: #2563EB !important; /* biru aktif */
+            background-color: #2563EB !important;
             color: #ffffff !important;
         }
 
         .bg-active:hover {
-            background-color: #1D4ED8 !important; /* biru lebih gelap */
+            background-color: #1D4ED8 !important;
             color: #ffffff !important;
         }
 
@@ -156,7 +144,7 @@
         .btn-toggle {
             padding: 0.75rem 1rem;
             font-weight: 600;
-            color: #475569; /* abu medium */
+            /* color: #475569; abu medium */
             background-color: transparent;
             border: 0;
             width: 100%;
@@ -179,7 +167,7 @@
             margin-top: 0.125rem;
             margin-left: 1.25rem;
             font-size: 0.875rem;
-            color: #475569;
+            /* color: #475569; */
             text-decoration: none;
             border-radius: 6px;
             transition: background-color 0.2s, color 0.2s;
@@ -187,7 +175,7 @@
 
         .btn-toggle-nav a:hover {
             background-color: #f1f5f9;
-            color: #2563EB;
+            /* color: #2563EB; */
         }
 
         .sub-nav-active {
@@ -198,17 +186,6 @@
         .logout button:hover {
             background-color: #fee2e2; /* merah muda lembut */
             color: #b91c1c;
-        }
-
-        /* table styling */
-        .dataTables_filter {
-            margin-bottom: 15px;
-        }
-        #akun-siswa thead tr th,
-        #absensiswa thead tr th,
-        #data-guru thead tr th{
-            background-color: #2563EB;
-            border: #2563EB;
         }
 
         /* Style untuk notifikasi */
@@ -250,98 +227,39 @@
         <div class="sidebar-overlay"></div>
 
         <!-- Sidebar -->
-        <aside class="app-sidebar bg-body-secondary {{$sidebarShow ?? 'd-block'}}">
-            <div class="flex-shrink-0 p-3 bg-white d-flex flex-column h-100">
+        <aside class="app-sidebar {{$sidebarShow ?? 'd-block'}}">
+            <div class="flex-shrink-0 p-3 d-flex flex-column h-100 bg-green-100">
                 <div class="sidebar-brand">
                     <a href="/" class="brand-link">
-                        <img src="{{ asset('img/Prima Score.png') }}" alt="Logo" class="opacity-75 brand-image"
+                        <img src="{{ asset('assets/img/Prima Score.png') }}" alt="Logo" class="opacity-75 brand-image"
                             style="width: 150px;">
                     </a>
                 </div>
                 <div class="sidebar-content">
-                    {{-- <ul class="mb-auto nav nav-pills flex-column">
+
+                    <ul class="mb-auto nav nav-pills flex-column">
                         @hasanyrole('admin')
-                        <li class="nav-item">
-                            <a class="rounded navbar navbar-light btn ps-3 link-dark align-items-center w-100 text-start crazy-nav {{Route::is('home') ? 'bg-active' : ''}}"
-                                href="{{route('home')}}">
-                                Dashboard
+                        <li class="nav-item my-1">
+                            <a class="rounded navbar navbar-light btn ps-3 link-dark align-items-center w-100 text-start crazy-nav"
+                                href="{{route('admin.dashboard')}}">
+                                Scanner
                             </a>
                         </li>
-                        @endhasanyrole
 
-                        @hasanyrole('admin')
-                        <li class="nav-item">
-                            <a class="rounded navbar navbar-light btn ps-3 link-dark align-items-center w-100 text-start crazy-nav {{Route::is('scanner') ? 'bg-active' : ''}}"
-                                href="{{route('scanner')}}">
+                        <li class="nav-item my-1">
+                            <a class="rounded navbar navbar-light btn ps-3 link-dark align-items-center w-100 text-start crazy-nav {{Route::is('admin.dashboard') ? 'bg-green-200 text-gray-100' : ''}}"
+                                href="{{route('admin.dashboard')}}">
+                                Scanner
+                            </a>
+                        </li>
+
+                        <li class="nav-item my-1">
+                            <a class="rounded navbar navbar-light btn ps-3 link-dark align-items-center w-100 text-start crazy-nav {{Route::is('admin.dashboard') ? 'bg-green-200 text-gray-100' : ''}}"
+                                href="{{route('admin.dashboard')}}">
                                 Scanner
                             </a>
                         </li>
                         @endhasanyrole
-
-                        @php
-                        $dataPage = Route::is('data.students', 'data.siswa.index', 'data.absen');
-                        $dataGuru = Route::is('data.guru.index', 'data.guru.edit')
-                        @endphp
-
-                        @hasanyrole('admin|teacher')
-                        <li>
-                            <button
-                                class="rounded btn btn-toggle align-items-center collapsed w-100 text-start {{$dataPage || $dataGuru ? 'bg-active' : ''}}"
-                                data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
-                                aria-expanded="{{$dataPage || $dataGuru ? 'true' : 'false'}}">
-                                Data
-                            </button>
-                            <div class="collapse {{$dataPage || $dataGuru ? 'show' : ''}}" id="dashboard-collapse">
-                                <ul class="pb-1 btn-toggle-nav list-unstyled fw-normal small ms-3 menu-open">
-                                    @hasanyrole('admin|teacher')
-                                    <li class=" {{Route::is('data.absen') ? 'sub-nav-active' : ''}}"><a
-                                            href="{{route('data.absen')}}"
-                                            class="py-1 rounded d-block {{Route::is('data.absen') ? 'sub-nav-active' : ''}}">Riwayat
-                                            Absen</a></li>
-                                    @endhasanyrole
-                                    @hasanyrole('admin')
-                                    <li class=" {{Route::is('data.siswa.index') ? 'sub-nav-active' : ''}}"><a
-                                            href="{{route('data.siswa.index')}}"
-                                            class="py-1 rounded d-block {{Route::is('data.siswa.index') ? 'sub-nav-active' : ''}}">Akun
-                                            Siswa</a></li>
-                                    <li class=" {{$dataGuru ? 'sub-nav-active' : ''}}"><a
-                                            href="{{route('data.guru.index')}}"
-                                            class="py-1 rounded d-block {{$dataGuru ? 'sub-nav-active' : ''}}">Akun
-                                            Guru</a></li>
-                                    @endhasanyrole
-                                </ul>
-                            </div>
-                        </li>
-                        @endhasanyrole
-
-                        <li class="my-3 border-top"></li>
-
-                        @php
-                        $profilePage = Route::is('profile.index');
-                        @endphp
-
-                        <li>
-                            <button
-                                class="rounded btn btn-toggle align-items-center collapsed w-100 text-start {{$profilePage ? 'bg-active' : ''}}"
-                                data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                                Account
-                            </button>
-                            <div class="collapse {{Route::is('profile.index') ? 'show' : ''}}" id="account-collapse">
-                                <ul class="pb-1 btn-toggle-nav list-unstyled fw-normal small ms-3">
-                                    <li class=" {{Route::is('profile.index') ? 'sub-nav-active' : ''}}"><a
-                                            href="{{route('profile.index')}}"
-                                            class="py-1 rounded link-dark d-block {{Route::is('profile.index') ? 'sub-nav-active' : ''}}">Profile</a>
-                                    </li>
-                                    <li class="btn-toggle-nav logout">
-                                        <button class="btn btn-outline-danger mt-1" id="logout">Logout</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul> --}}
-
-                    <ul class="mb-auto nav nav-pills flex-column">
-                        
                     </ul>
 
                 </div>
@@ -373,17 +291,9 @@
         </div>
     </div>
 
-    @if (config('app.env') !== 'production')
     <script src="{{ asset('assets/jquery/jquery-3.7.0.min.js') }}"></script>
     <script src="{{ asset('assets/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    @else
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-    </script>
-    @endif
 
     <script>
         // Fungsi untuk toggle sidebar di mode mobile
@@ -443,7 +353,7 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        window.location.href = "{{route('login')}}"
+                        window.location.href = "{{route('login.page')}}"
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // This function is executed if the request fails
