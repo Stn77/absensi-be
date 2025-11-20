@@ -17,16 +17,16 @@ class WebAuthController extends Controller
 
     public function loginSubmit(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('email', 'password');
         $request->validate([
-            'username' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        $loginData = User::where('username', $credentials['username'])->first();
+        $loginData = User::where('email', $credentials['email'])->first();
         if (!$loginData) {
-            Log::error("User not found: " . $credentials['username']);
-            return redirect()->back()->withErrors(['error' => 'Username does not exist.']);
+            Log::error("User not found: " . $credentials['email']);
+            return redirect()->back()->withErrors(['error' => 'Email does not exist.']);
         }
         if (!password_verify($credentials['password'], $loginData->password)) {
             return redirect()->back()->withErrors(['error' => 'The provided password is incorrect.']);
@@ -47,23 +47,20 @@ class WebAuthController extends Controller
         $authUser = Auth::user()->id;
         $user = User::with('roles')->where('id', $authUser)->first();
         if ($user->hasRole('admin')) {
-            // dd('youre a admin');
-            return redirect()->route('home');
-        } elseif ($user->hasRole('scanner')) {
-            // dd('youre a scanner');
-            return redirect()->route('scanner');
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->hasRole('guru')) {
+            return redirect()->route('guru.dashboard');
         } else {
-            // dd('youre a user');
-            return redirect()->route('profile.index');
+            return redirect()->route('siswa.dashboard');
         }
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate(); 
+        $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login');
+        return redirect()->route('login.page');
     }
 
     public function showRegistrationForm()
@@ -71,5 +68,28 @@ class WebAuthController extends Controller
         return view('auth.register');
     }
 
-    public function registrationSubmit() {}
+    public function registrationSubmit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ], [
+            'email.unique' => 'Email sudah digunakan.',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        $user->assignRole('siswa');
+        $user->siswa()->create([
+            'name' => $request->name,
+        ]);
+
+        Auth::login($user);
+        return redirect()->route('profile.index');
+    }
 }

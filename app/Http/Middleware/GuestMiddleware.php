@@ -14,9 +14,16 @@ class GuestMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Jika user sudah login, redirect ke home (atau dashboard)
+        // Jika user sudah login, redirect ke dashboard
         if (Auth::check()) {
-            return redirect()->route('home'); // ganti 'home' dengan route yang sesuai
+            $user = Auth::user();
+            if ($user->hasRole('admin')) {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->hasRole('guru')) {
+                return redirect()->route('guru.dashboard');
+            } else {
+                return redirect()->route('siswa.dashboard');
+            }
         }
 
         // Jika belum login, lanjutkan request
