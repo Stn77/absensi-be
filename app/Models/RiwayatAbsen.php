@@ -9,7 +9,7 @@ class RiwayatAbsen extends Model
 {
     /** @use HasFactory<\Database\Factories\RiwayatAbsenFactory> */
     use HasFactory;
-    protected $fillable = ['siswa_id', 'tanggal', 'hari', 'is_late', 'waktu_absen', 'latitude', 'longitude'];
+    protected $fillable = ['siswa_id', 'tanggal', 'hari', 'is_late', 'waktu_absen', 'latitude', 'longitude', 'jenis'];
 
     public function user()
     {

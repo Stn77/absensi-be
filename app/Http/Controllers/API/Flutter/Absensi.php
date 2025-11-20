@@ -30,6 +30,11 @@ class Absensi extends Controller
     {
         $user = $request->user();
         $siswa = $user->siswa()->first();
+        $jenis = 'datang';
+
+        if(RiwayatAbsen::where('siswa_id', $siswa->id)->where('tanggal', $request->tanggal)->where('jenis', 'datang')->exists()) {
+            $jenis = 'pulang';
+        }
 
         $riwayatAbsen = RiwayatAbsen::create([
             'tanggal' => $request->tanggal,
@@ -39,6 +44,7 @@ class Absensi extends Controller
             'longitude' => $request->longitude,
             'is_late' => $request->time > '08:00:00' ? 'Terlambat' : 'Tepat Waktu',
             'siswa_id' => $siswa->id,
+            'jenis' => $jenis,
         ]);
 
         return response()->json([

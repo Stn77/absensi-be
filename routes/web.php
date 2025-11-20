@@ -13,14 +13,42 @@ Route::get('/test', [TestController::class, 'test_send_message']);
 
 Route::prefix('auth')->middleware('guest')->controller(WebAuthController::class)->group(function () {
     Route::get('login', 'showLoginForm')->name('login.page');
-    Route::get('login/s', 'loginSubmit')->name('login.submit');
+    Route::post('login/s', 'loginSubmit')->name('login.submit');
 
     Route::get('register', 'showRegistrationForm')->name('register.page');
-    Route::get('register/s', 'registrationSubmit')->name('register.submit');
+    Route::post('register/s', 'registrationSubmit')->name('register.submit');
 });
 
-Route::prefix('dashboard')->middleware('auth')->group(function () {
+Route::post('logout', [WebAuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+Route::prefix('dashboard')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+
+});
+
+// Route::prefix('dashboard')->middleware(['auth', 'role:siswa'])->group(function () {
+//     Route::get('/', function () {
+//         return view('dashboard.index');
+//     })->name('home');
+
+
+// });
+
+// Route::prefix('dashboard')->middleware(['auth', 'role:guru'])->group(function () {
+//     Route::get('/', function () {
+//         return view('dashboard.index');
+//     })->name('home');
+
+
+// });
+
+Route::prefix('profile')->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('profile.index');
+    })->name('profile.index');
 });
 
 Route::prefix('whatsapp')->group(function () {

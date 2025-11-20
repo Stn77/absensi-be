@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->string('hari');
             $table->time('waktu_absen');
+            $table->enum('jenis', ['datang', 'pulang']);
             $table->string('latitude');
             $table->string('longitude');
             $table->enum('is_late', ['Terlambat', 'Tepat Waktu'])->default('Tepat Waktu');

@@ -29,10 +29,6 @@ Route::prefix('iot/absen')->group(function () {
     Route::post('/logout', [DeviceAuthController::class, 'logout'])->middleware('auth:sanctum');
 });
 
-Route::prefix('anrd/absen')->group(function () {
-    Route::post('/login', [AnrdAuthController::class, 'login']);
-});
-
 // ⭐ PENTING: Route Login (tanpa middleware)
 Route::post('/test/login', [TestAuth::class, 'login']);
 
@@ -58,6 +54,11 @@ Route::prefix('whatsapp')->group(function () {
 
 Route::prefix('user')->middleware('auth:sanctum')->group(function (){
     Route::get('profile', [Profile::class, 'index']);
+});
+
+Route::prefix('/absen')->group(function () {
+    Route::post('/login', [AnrdAuthController::class, 'login']);
+    Route::post('/logout', [AnrdAuthController::class, 'logout']);
 });
 
 Route::prefix('absen')->middleware('auth:sanctum')->group(function () {
