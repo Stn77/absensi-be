@@ -16,14 +16,7 @@ class GuestMiddleware
     {
         // Jika user sudah login, redirect ke dashboard
         if (Auth::check()) {
-            $user = Auth::user();
-            if ($user->hasRole('admin')) {
-                return redirect()->route('admin.dashboard');
-            } elseif ($user->hasRole('guru')) {
-                return redirect()->route('guru.dashboard');
-            } else {
-                return redirect()->route('siswa.dashboard');
-            }
+            return redirect()->route('dashboard');
         }
 
         // Jika belum login, lanjutkan request

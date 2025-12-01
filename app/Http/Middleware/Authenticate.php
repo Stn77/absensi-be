@@ -18,7 +18,7 @@ class Authenticate
     {
         // Jika user belum login, redirect ke home (atau dashboard)
         if (!Auth::check()) {
-            return redirect()->route('login.page'); // ganti 'login' dengan route yang sesuai
+            return redirect()->route('login'); // ganti 'login' dengan route yang sesuai
         }
 
         // Jika belum login, lanjutkan request

@@ -26,15 +26,15 @@ class WebAuthController extends Controller
         $loginData = User::where('email', $credentials['email'])->first();
         if (!$loginData) {
             Log::error("User not found: " . $credentials['email']);
-            return redirect()->back()->withErrors(['error' => 'Email does not exist.']);
+            return redirect()->back()->withErrors('email', 'User not found.');
         }
         if (!password_verify($credentials['password'], $loginData->password)) {
-            return redirect()->back()->withErrors(['error' => 'The provided password is incorrect.']);
+            return redirect()->back()->withErrors('password', 'The provided password is incorrect.');
         }
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return $this->redirectRole();
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([
@@ -42,25 +42,12 @@ class WebAuthController extends Controller
         ]);
     }
 
-    public function redirectRole()
-    {
-        $authUser = Auth::user()->id;
-        $user = User::with('roles')->where('id', $authUser)->first();
-        if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard');
-        } elseif ($user->hasRole('guru')) {
-            return redirect()->route('guru.dashboard');
-        } else {
-            return redirect()->route('siswa.dashboard');
-        }
-    }
-
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login.page');
+        return redirect()->route('login');
     }
 
     public function showRegistrationForm()
