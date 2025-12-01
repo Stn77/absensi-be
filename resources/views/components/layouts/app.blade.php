@@ -8,340 +8,377 @@
     <title>{{$title ?? config('app.name')}}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link href="{{ asset('assets/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/datatables/dataTables.bootstrap5.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/fontawesome/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/datatables/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/css/poppins.css')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"
+        integrity="sha512-BMbq2It2D3J17/C7aRklzOODG1IQ3+MHw3ifzBHMBwGO/0yUqYmsStgBjI0z5EYlaDEFnvYV7gNYdD3vFLRKsA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{--
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css"
+        integrity="sha512-1k7mWiTNoyx2XtmI96o+hdjP8nn0f3Z2N4oF/9ZZRgijyV4omsKOXEnqL1gKQNPy2MTSP9rIEWGcH/CInulptA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    {{--
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css"
+        integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+
     <style>
-        /* Styling untuk sidebar responsif */
-        .app-wrapper {
-            display: flex;
-            width: 100%;
-            align-items: stretch;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .app-sidebar {
-            min-height: 100vh;
-            width: 280px;
-            transition: all 0.3s;
-            z-index: 1000;
-            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        .app-main {
-            width: 100%;
-            overflow-x: hidden;
-            transition: all 0.3s;
-        }
-
-        /* Toggle button styling */
-        .sidebar-toggle {
-            display: none;
-            top: 20px;
-            left: 20px;
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            padding: 2px 10px;
-            margin-right: 20px;
-        }
-
-        /* Overlay untuk mobile */
-        .sidebar-overlay {
-            display: none;
+        .sidebar {
             position: fixed;
-            width: 100vw;
+            top: 0;
+            left: 0;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .sidebar-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Responsif untuk perangkat mobile */
-        @media (max-width: 992px) {
-            .app-sidebar {
-                position: fixed;
-                left: -280px;
-                height: 100vh;
-                overflow-y: auto;
-            }
-
-            .app-sidebar.active {
-                left: 0;
-            }
-
-            .app-main {
-                width: 100%;
-            }
-
-            .sidebar-toggle {
-                display: block;
-            }
-
-            body.sidebar-open {
-                overflow: hidden;
-            }
-        }
-        .btn-toggle[aria-expanded="true"] {
-            color: rgba(0, 0, 0, 0.85);
-            z-index: 10;
-        }
-
-        .btn-toggle[aria-expanded="true"]::after {
-            transform: rotate(90deg);
-        }
-
-        /* Sidebar styling */
-        .app-sidebar {
-            min-height: 100vh;
-            width: 280px;
-            transition: all 0.3s;
+            width: 260px;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px 0;
+            transition: all 0.3s ease;
             z-index: 1000;
-            /* background-color: #ffffff; */
-            border-right: 1px solid #e2e8f0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .sidebar-brand {
-            padding: 1rem;
-            text-align: center;
-            /* border-bottom: 1px solid; */
-        }
-
-        .sidebar-content {
-            height: calc(100vh - 80px);
-            overflow-y: auto;
-            padding: 0 0 1rem 0;
-        }
-
-        /* Menu utama */
-        .crazy-nav {
-            font-weight: 500;
-            transition: background-color 0.2s, color 0.2s;
-        }
-
-        .crazy-nav:hover {
-            background-color: #f1f5f9;
-            color: #2563EB;
-        }
-
-        .bg-active {
-            background-color: #2563EB !important;
-            color: #ffffff !important;
-        }
-
-        .bg-active:hover {
-            background-color: #1D4ED8 !important;
-            color: #ffffff !important;
-        }
-
-        /* Submenu */
-        .btn-toggle {
-            padding: 0.75rem 1rem;
-            font-weight: 600;
-            /* color: #475569; abu medium */
-            background-color: transparent;
-            border: 0;
-            width: 100%;
-            text-align: left;
-        }
-
-        .btn-toggle:hover,
-        .btn-toggle:focus {
-            color: #2563EB;
-            background-color: #f8fafc;
-        }
-
-        .btn-toggle[aria-expanded="true"] {
-            color: #2563EB;
-            background-color: #f1f5f9;
-        }
-
-        .btn-toggle-nav a, .btn-toggle-nav .logout {
-            padding: 0.5rem 1.5rem;
-            margin-top: 0.125rem;
-            margin-left: 1.25rem;
-            font-size: 0.875rem;
-            /* color: #475569; */
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
             text-decoration: none;
-            border-radius: 6px;
-            transition: background-color 0.2s, color 0.2s;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
-        .btn-toggle-nav a:hover {
-            background-color: #f1f5f9;
-            /* color: #2563EB; */
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        .sub-nav-active {
-            background-color: #10B981 !important; /* hijau aktif */
-            color: #ffffff !important;
-            border-radius: 5px;
-        }
-        .logout button:hover {
-            background-color: #fee2e2; /* merah muda lembut */
-            color: #b91c1c;
-        }
-
-        /* Style untuk notifikasi */
-        #notification-area {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            width: 350px;
-        }
-
-        .alert-auto-close {
-            position: relative;
+        .brand-text {
+            white-space: nowrap;
             overflow: hidden;
+            transition: opacity 0.3s;
         }
 
-        .alert-auto-close .progress {
+        .sidebar.collapsed .brand-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .toggle-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+            margin: 0;
+        }
+
+        .menu-item {
+            margin-bottom: 5px;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .menu-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .menu-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-left: 4px solid #fff;
+        }
+
+        .menu-icon {
+            width: 40px;
+            font-size: 1.2rem;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .menu-text {
+            white-space: nowrap;
+            overflow: hidden;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar.collapsed .menu-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .menu-badge {
+            margin-left: auto;
+            background: #ff4757;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .sidebar.collapsed .menu-badge {
+            display: none;
+        }
+
+        .sidebar-footer {
             position: absolute;
             bottom: 0;
-            left: 0;
             width: 100%;
-            height: 3px;
-            background: rgba(0,0,0,0.1);
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .alert-auto-close .progress-bar {
-            transition: width 2s linear;
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 600;
+        }
+
+        .user-info {
+            overflow: hidden;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar.collapsed .user-info {
+            opacity: 0;
+            width: 0;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+            min-height: 100vh;
+            transform: translateY(-70px);
+        }
+
+        .sidebar.collapsed~.main-content {
+            margin-left: 80px;
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
+        .poni {
+            margin: auto;
+            width: 100vh;
+            height: 75px;
+            position: inherit;
+            top: -2px;
+            left: 2px;
+            z-index: 1;
+        }
+
+        .mobile-menu-btn{
+            display: none;
+        }
+        @media (max-width: 868px) {
+            .sidebar {
+                left: -260px;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 998;
+                background: #1e3c72;
+                color: white;
+                border: none;
+                width: 45px;
+                height: 45px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .poni {
+                left: 0px;
+            }
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            z-index: 2;
+            color: #101110;
+            transition: all 0.1s ease-in-out;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .u-name{
+            font-weight: 500;
         }
     </style>
+    <link rel="stylesheet" href="{{asset('assets/css/custom-style.css')}}">
     @stack('style')
 </head>
 
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
-    <div class="app-wrapper">
-        <!-- Toggle Button untuk Mobile -->
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
 
-
-        <!-- Overlay untuk Mobile -->
-        <div class="sidebar-overlay"></div>
-
-        <!-- Sidebar -->
-        <aside class="app-sidebar {{$sidebarShow ?? 'd-block'}}">
-            <div class="flex-shrink-0 p-3 d-flex flex-column h-100 bg-green-100">
-                <div class="sidebar-brand">
-                    <a href="/" class="brand-link">
-                        <img src="{{ asset('assets/img/Prima Score.png') }}" alt="Logo" class="opacity-75 brand-image"
-                            style="width: 150px;">
-                    </a>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-layer-group"></i>
                 </div>
-                <div class="sidebar-content">
-
-                    <ul class="mb-auto nav nav-pills flex-column">
-                        @hasanyrole('admin')
-                        <li class="nav-item my-1">
-                            <a class="rounded navbar navbar-light btn ps-3 link-dark align-items-center w-100 text-start crazy-nav"
-                                href="{{route('admin.dashboard')}}">
-                                Scanner
-                            </a>
-                        </li>
-
-                        <li class="nav-item my-1">
-                            <a class="rounded navbar navbar-light btn ps-3 link-dark align-items-center w-100 text-start crazy-nav {{Route::is('admin.dashboard') ? 'bg-green-200 text-gray-100' : ''}}"
-                                href="{{route('admin.dashboard')}}">
-                                Scanner
-                            </a>
-                        </li>
-
-                        <li class="nav-item my-1">
-                            <a class="rounded navbar navbar-light btn ps-3 link-dark align-items-center w-100 text-start crazy-nav {{Route::is('admin.dashboard') ? 'bg-green-200 text-gray-100' : ''}}"
-                                href="{{route('admin.dashboard')}}">
-                                Scanner
-                            </a>
-                        </li>
-                        @endhasanyrole
-                    </ul>
-
-                </div>
-            </div>
-        </aside>
-
-        <div class="app-main">
-            <div class="p-3 d-flex flex-column flex-grow-1">
-                <div class="d-flex">
-                    <button class="sidebar-toggle" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-menu">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                    </button>
-                    <div class="app-content-header">
-                        <h2 style="color: #303030;" class="{{$pageTitleName ?? 'd-block'}}">{{$pageTitleName ?? ''}}
-                        </h2>
-                    </div>
-                </div>
-                <div class="p-3 rounded shadow-sm app-content">
-                    <div id="notification-area"></div>
-                    {{$slot}}
-                </div>
-            </div>
+                <span class="brand-text">Dashboard</span>
+            </a>
+            {{-- <button class="toggle-btn d-none d-md-block" onclick="toggleCollapse()">
+                <i class="fas fa-bars"></i>
+            </button> --}}
         </div>
+
+        <ul class="sidebar-menu">
+            <x-pieces.nav-button link="dashboard" icon="home" name="Dashboard" />
+
+            <x-pieces.nav-button link="admin.absensi.index" icon="calendar-alt" name="Absensi Siswa" />
+
+            <x-pieces.sdbline />
+
+            <x-pieces.nav-button link="dashboard" icon="file-alt" name="Laporan" />
+
+        </ul>
+
+    </aside>
+
+    <div class="poni bg-primary w-100">
+
     </div>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay d-lg-none" id="mobileOverlay" onclick="toggleSidebar()"></div>
 
-    <script src="{{ asset('assets/jquery/jquery-3.7.0.min.js') }}"></script>
-    <script src="{{ asset('assets/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-card">
+            <h2>{{ \App\Helpers\GreetingHelper::getGreeting() }} <span class="u-name poppins-bold">{{Auth::user()->name}}</span></h2>
 
+        </div>
+        {{$slot}}
+
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
+        integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        // Fungsi untuk toggle sidebar di mode mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.app-sidebar');
-            const sidebarToggle = document.querySelector('.sidebar-toggle');
-            const overlay = document.querySelector('.sidebar-overlay');
-            const body = document.body;
+        function toggleCollapse() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
 
-            // Toggle sidebar ketika tombol diklik
-            sidebarToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-                overlay.classList.toggle('active');
-                body.classList.toggle('sidebar-open');
-            });
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
 
-            // Tutup sidebar ketika overlay diklik
-            overlay.addEventListener('click', function() {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-                body.classList.remove('sidebar-open');
-            });
-
-            // Tutup sidebar ketika item menu diklik di mode mobile
-            if (window.innerWidth < 992) {
-                const navLinks = document.querySelectorAll('.nav-link, .btn-toggle-nav a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        sidebar.classList.remove('active');
-                        overlay.classList.remove('active');
-                        body.classList.remove('sidebar-open');
-                    });
-                });
-            }
-
-            // Responsif ketika ukuran window berubah
-            window.addEventListener('resize', function() {
-                if (window.innerWidth >= 992) {
-                    sidebar.classList.remove('active');
-                    overlay.classList.remove('active');
-                    body.classList.remove('sidebar-open');
-                }
-            });
-
-            // Logout function
-
-        });
     </script>
+
     <script>
         $('#logout').on('click', () => {
             const logoutConfirm = confirm('Apakah ingin Logout?')
@@ -353,7 +390,7 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        window.location.href = "{{route('login.page')}}"
+                        window.location.href = "{{route('login')}}"
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // This function is executed if the request fails
