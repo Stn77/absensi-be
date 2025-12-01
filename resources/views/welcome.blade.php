@@ -67,8 +67,8 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
         <a class="navbar-brand" href="#">
-            <img src="{{asset('assets/logo/Group 2 (1).png')}}" alt="Logo" width="30" height="30"
-                class="d-inline-block align-text-top">
+            {{-- <img src="{{asset('assets/logo/Group 2 (1).png')}}" alt="Logo" width="30" height="30"
+                class="d-inline-block align-text-top"> --}}
             Prima Score
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -84,30 +84,29 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
+                <div class="dropdown nav-item">
+                    <button class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
             </ul>
-            <div class="d-flex">
-                <a class="btn btn-primary text-light mx-2" href="{{route('login.page')}}">
+            {{-- <div class="d-flex">
+                <a class="btn btn-primary text-light mx-2" href="{{route('login')}}">
                     Login
                 </a>
                 <a class="btn btn-outline-primary mx-2">
                     Regiter
                 </a>
-            </div>
+            </div> --}}
         </div>
     </nav>
 
@@ -123,8 +122,8 @@
                 <p class="lead mb-4">Aplikasi monitor kehadiran siswa secara realtime dan akurat. Disertai juga beberapa
                     fitur pendukung untuk rekap absensi. </p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-                    <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Primary button</button>
-                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
+                    <a href="{{route('login')}}" type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Login</a>
+                    {{-- <a href="" type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</a> --}}
                 </div>
             </div>
             <div class="overflow-hidden">
@@ -141,11 +140,12 @@
         <div class="row align-items-center g-lg-5 py-5">
             <div class="col-lg-7 text-center text-lg-start">
                 <h1 class="display-4 fw-bold lh-1 mb-3">Daftar dan nikmati fitur yang tersedia</h1>
-                <p class="col-lg-10 fs-4">Setelah anda daftar silahkan login dan Anda dapat menikmati fitur dan layanan Prima Score</p>
+                <p class="col-lg-10 fs-4">Setelah anda daftar silahkan login dan Anda dapat menikmati fitur dan layanan
+                    Prima Score</p>
             </div>
             <div class="col-md-10 mx-auto col-lg-5">
-                <form class="p-4 p-md-5 border rounded-3 bg-light" id="registerForm" action="{{route('register.submit')}}"
-                    method="POST">
+                <form class="p-4 p-md-5 border rounded-3 bg-light" id="registerForm"
+                    action="{{route('register.submit')}}" method="POST">
                     @csrf
                     <div class="form-floating mb-3">
                         @error('name')
@@ -200,14 +200,6 @@
             </ul>
         </footer>
     </div>
-
-    @if (config('app.env') !== 'production')
-    <script src="{{ asset('assets/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    @else
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-    </script>
-    @endif
 </body>
 
 </html>

@@ -100,7 +100,7 @@
                         @error('email')
                         <div class="text-danger">{{$message}}</div>
                         @enderror
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan email Anda" required>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan email Anda" required value="{{old('email')}}">
                         <div class="invalid-feedback">Harap masukkan email yang valid</div>
                     </div>
 
