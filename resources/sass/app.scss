@@ -52,20 +52,20 @@ $font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetic
 
 // Extend Bootstrap color maps dengan custom colors
 $custom-colors: (
-  "green-100": $green-100,
-  "green-200": $green-200,
-  "green-300": $green-300,
-  "green-400": $green-400,
-  "green-500": $green-500,
-  "green-600": $green-600,
-  "green-700": $green-700,
-  "gray-100": $white-gray-100,
-  "gray-200": $white-gray-200,
-  "gray-300": $white-gray-300,
-  "gray-400": $white-gray-400,
-  "gray-500": $white-gray-500,
-  "gray-600": $white-gray-600,
-  "gray-700": $white-gray-700,
+    "green-100": $green-100,
+    "green-200": $green-200,
+    "green-300": $green-300,
+    "green-400": $green-400,
+    "green-500": $green-500,
+    "green-600": $green-600,
+    "green-700": $green-700,
+    "gray-100": $white-gray-100,
+    "gray-200": $white-gray-200,
+    "gray-300": $white-gray-300,
+    "gray-400": $white-gray-400,
+    "gray-500": $white-gray-500,
+    "gray-600": $white-gray-600,
+    "gray-700": $white-gray-700,
 );
 
 // Merge custom colors dengan Bootstrap colors
@@ -78,29 +78,18 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'bootstrap/scss/utilities';
 
 // Tambahkan custom utilities untuk background dan text color
-$utilities: map-merge(
-  $utilities,
-  (
-    "color": map-merge(
-      map-get($utilities, "color"),
-      (
-        values: map-merge(
-          map-get(map-get($utilities, "color"), "values"),
-          $custom-colors
-        ),
-      ),
-    ),
-    "background-color": map-merge(
-      map-get($utilities, "background-color"),
-      (
-        values: map-merge(
-          map-get(map-get($utilities, "background-color"), "values"),
-          $custom-colors
-        ),
-      ),
-    ),
-  )
-);
+$utilities: map-merge($utilities,
+        ("color": map-merge(map-get($utilities, "color"),
+                (values: map-merge(map-get(map-get($utilities, "color"), "values"),
+                        $custom-colors ),
+                ),
+            ),
+            "background-color": map-merge(map-get($utilities, "background-color"),
+                (values: map-merge(map-get(map-get($utilities, "background-color"), "values"),
+                        $custom-colors ),
+                ),
+            ),
+        ));
 
 // Import remaining Bootstrap components
 @import 'bootstrap/scss/root';
@@ -200,4 +189,22 @@ $utilities: map-merge(
     &:active {
         color: #ffffff !important;
     }
+}
+
+.btn {
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+.table thead tr th{
+    background-color: $green-300;
+    color: #ffffff;
+}
+.table thead tr th{
+    border: $green-200 1px solid;
+}
+
+.snack-green {
+    border-left: 4px solid $green-200;
+    background-color: #A0FFC4;
+    padding: 10px 0;
 }
