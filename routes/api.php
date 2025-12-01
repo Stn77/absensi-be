@@ -29,20 +29,16 @@ Route::prefix('iot/absen')->group(function () {
     Route::post('/logout', [DeviceAuthController::class, 'logout'])->middleware('auth:sanctum');
 });
 
-// ⭐ PENTING: Route Login (tanpa middleware)
 Route::post('/test/login', [TestAuth::class, 'login']);
 
-// ⭐ PENTING: Route yang memerlukan autentikasi (sanctum)
 Route::prefix('test')->middleware('auth:sanctum')->group(function () {
     // User info
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
-    // Logout
     Route::post('/logout', [TestAuth::class, 'logout']);
 
-    // ⭐ PENTING: CRUD Barang
     Route::apiResource('barang', BarangController::class);
 });
 
@@ -52,7 +48,7 @@ Route::prefix('whatsapp')->group(function () {
     Route::post('/send-bulk', [WhatsAppController::class, 'sendBulk']);
 });
 
-Route::prefix('user')->middleware('auth:sanctum')->group(function (){
+Route::prefix('user')->middleware('auth:sanctum')->group(function () {
     Route::get('profile', [Profile::class, 'index']);
 });
 
@@ -61,6 +57,13 @@ Route::prefix('/absen')->group(function () {
 });
 
 Route::post('/absen/logout', [AnrdAuthController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::get('/absen/checktoken', function (Request $request) {
+    return response()->json([
+        'message' => 'Token masih aktif',
+        'user' => $request->user(),
+    ]);
+})->middleware('auth:sanctum');
 
 Route::prefix('absen')->middleware('auth:sanctum')->group(function () {
     Route::post('/submit', [FlutterAbsensi::class, 'absen']);
