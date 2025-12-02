@@ -5,11 +5,19 @@ namespace App\Http\Controllers\API\Flutter;
 use App\Http\Controllers\Controller;
 use App\Models\RiwayatAbsen;
 use App\Models\Siswa;
+use App\Services\FonnteService;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class Absensi extends Controller
 {
+    public $fonte;
+
+    public function __construct(FonnteService $fonte) {
+        $this->fonte = $fonte;
+    }
+
     /**
      * Handle absen submission
      * @param Request $request
@@ -32,8 +40,17 @@ class Absensi extends Controller
         $siswa = $user->siswa()->first();
         $jenis = 'datang';
 
-        if(RiwayatAbsen::where('siswa_id', $siswa->id)->where('tanggal', $request->tanggal)->where('jenis', 'datang')->exists()) {
+        $riwayatAbsenHistory = RiwayatAbsen::where('siswa_id', $siswa->id)->where('tanggal', $request->tanggal);
+
+        if($riwayatAbsenHistory->where('jenis', 'datang')->exists()) {
             $jenis = 'pulang';
+        }
+
+        if($riwayatAbsenHistory->where('jenis', 'pulang')->exists()) {
+            return response()->json([
+                'status' => '200',
+                'message' => 'anda sudah melakukan absen hari ini'
+            ], 201);
         }
 
         $riwayatAbsen = RiwayatAbsen::create([
@@ -46,6 +63,10 @@ class Absensi extends Controller
             'siswa_id' => $siswa->id,
             'jenis' => $jenis,
         ]);
+
+        $phone = $this->fonte->formatPhone($siswa->no_telepon);
+
+        $message = $this->fonte->sendMessage($phone, 'telah absen pada '.$jenis.' ' . time());
 
         return response()->json([
             'status' => '200',
