@@ -252,9 +252,10 @@
             z-index: 1;
         }
 
-        .mobile-menu-btn{
+        .mobile-menu-btn {
             display: none;
         }
+
         @media (max-width: 868px) {
             .sidebar {
                 left: -260px;
@@ -303,7 +304,7 @@
             margin: 0;
         }
 
-        .u-name{
+        .u-name {
             font-weight: 500;
         }
     </style>
@@ -311,7 +312,7 @@
     @stack('style')
 </head>
 
-<body>
+<body style="background-color: #f1fdfd;">
     <!-- Mobile Menu Button -->
     <button class="mobile-menu-btn" onclick="toggleSidebar()">
         <i class="fas fa-bars"></i>
@@ -332,13 +333,18 @@
         </div>
 
         <ul class="sidebar-menu">
-            <x-pieces.nav-button link="dashboard" icon="home" name="Dashboard" />
+            <x-pieces.nav-button role="admin" link="dashboard" icon="home" name="Dashboard" />
 
-            <x-pieces.nav-button link="admin.absensi.index" icon="calendar-alt" name="Absensi Siswa" />
+            <x-pieces.nav-button role="admin" link="admin.absensi.index" icon="calendar-alt" name="Absensi Siswa" />
+
+            <x-pieces.nav-button role="admin" link="siswa.izin.create" icon="file-alt" name="Pengajuan Izin" />
+
+            <x-pieces.nav-button role="admin" link="siswa.izin.list" icon="file-alt" name="Daftar Pengajuan Izin" />
 
             <x-pieces.sdbline />
 
-            <x-pieces.nav-button link="dashboard" icon="file-alt" name="Laporan" />
+            <x-pieces.nav-button role="admin|siswa" link="data.siswa.index" icon="user" name="Akun Siswa" />
+
 
         </ul>
 
@@ -352,9 +358,23 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="content-card">
-            <h2>{{ \App\Helpers\GreetingHelper::getGreeting() }} <span class="u-name poppins-bold">{{Auth::user()->name}}</span></h2>
-
+        <div class="row content-card d-flex align-items-center justify-content-between mb-4">
+            <div class="col-xl-4">
+                <h2>{{ \App\Helpers\GreetingHelper::getGreeting() }} <span
+                        class="u-name poppins-bold">{{Auth::user()->name}}</span></h2>
+            </div>
+            <div class="col-xl-4 d-flex justify-content-end">
+                <div class="dropdown">
+                    <button class="p-2 bg-gray-500 rounded-circle" style="border:none; width: 3rem; height: 3rem;" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fas fa-user fa-lg text-white rounded-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu poppins-regular">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><button class="dropdown-item poppins-semibold" id="logout">Logout</button></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         {{$slot}}
 

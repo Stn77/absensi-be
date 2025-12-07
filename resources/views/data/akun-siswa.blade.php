@@ -142,6 +142,15 @@
             margin: 0 20px 20px;
         }
 
+        .modal {
+            z-index: 1;
+        }
+
+        .modal-backdrop {
+            z-index: 1;
+            display: none;
+        }
+
         /* Responsive styles */
         @media (max-width: 1220px) {
             .top {
@@ -256,19 +265,14 @@
                                                 <input type="text" class="form-control" id="nisn" name="nisn" placeholder="NISN Siswa" required>
                                                 <div class="invalid-feedback">NISN harus diisi</div>
                                             </div>
-                                            <div class="form-group mb-3 col">
-                                                <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="username" name="username" placeholder="Username Siswa" required>
-                                                <div class="invalid-feedback">Username harus diisi</div>
-                                            </div>
                                             <div class="d-flex flex-column flex-md-row">
                                                 <div class="form-group mb-3 col me-md-2">
                                                     <label for="kelas" class="form-label">Kelas <span class="text-danger">*</span></label>
                                                     <select class="form-select" name="kelas" id="kelas" required>
                                                         <option value="" selected disabled>Pilih Kelas</option>
-                                                        <option value="1">X</option>
-                                                        <option value="2">XI</option>
-                                                        <option value="3">XII</option>
+                                                        @foreach ($kelas as $kls)
+                                                        <option value="{{$kls->id}}">{{strtoupper($kls->name)}}</option>
+                                                        @endforeach
                                                     </select>
                                                     <div class="invalid-feedback">Kelas harus dipilih</div>
                                                 </div>
@@ -276,13 +280,9 @@
                                                     <label for="jurusan" class="form-label">Jurusan <span class="text-danger">*</span></label>
                                                     <select class="form-select" name="jurusan" id="jurusan" required>
                                                         <option value="" selected disabled>Pilih Jurusan</option>
-                                                        <option value="1">MP</option>
-                                                        <option value="2">AK</option>
-                                                        <option value="3">BD</option>
-                                                        <option value="4">TSM</option>
-                                                        <option value="5">DKV</option>
-                                                        <option value="6">PPLG</option>
-                                                        <option value="7">TKKR</option>
+                                                        @foreach ($jurusan as $jr)
+                                                        <option value="{{$jr->id}}" >{{strtoupper($jr->name)}}</option>
+                                                        @endforeach
                                                     </select>
                                                     <div class="invalid-feedback">Jurusan harus dipilih</div>
                                                 </div>
@@ -354,7 +354,6 @@
                                                             <tr>
                                                                 <td><strong>NISN</strong></td>
                                                                 <td><strong>Nama Lengkap</strong></td>
-                                                                <td><strong>Username</strong></td>
                                                                 <td><strong>Email (Opsional)</strong></td>
                                                                 <td><strong>Password</strong></td>
                                                                 <td><strong>Kelas</strong></td>
@@ -363,7 +362,6 @@
                                                             <tr class="table-light">
                                                                 <td>12345/1234</td>
                                                                 <td>John Doe</td>
-                                                                <td>john_doe</td>
                                                                 <td>john@example.com</td>
                                                                 <td>password123</td>
                                                                 <td>1,2,3</td>
@@ -467,7 +465,7 @@
 
     @push('script')
     <script>
-        var userRoute = "{{ route('data.siswa.sigle', ['id' => ':id']) }}";
+        var userRoute = "{{ route('data.siswa.single', ['id' => ':id']) }}";
         var deleteRoute = "{{ route('data.siswa.delete', ['id' => ':id']) }}";
         // var idDelete = '';
         $(document).ready(() => {
@@ -492,7 +490,6 @@
                         }
                     },
                     {data: 'siswa.nisn', title: 'NISN Siswa'},
-                    {data: 'username', title: 'Username'},
                     {data: 'siswa.name', title: 'Nama Siswa'},
                     {data: 'siswa.kelas.name', title: 'Kelas'},
                     {data: 'siswa.jurusan.name', title: 'Jurusan'},
