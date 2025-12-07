@@ -39,4 +39,15 @@ class Siswa extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function izin()
+    {
+        return $this->hasMany(IzinModel::class, 'siswa_id');
+    }
+
+    public function getIzin()
+    {
+        $data = $this->izin()->get();
+        return $data;
+    }
 }
