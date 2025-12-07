@@ -48,6 +48,13 @@ Route::prefix('whatsapp')->group(function () {
     Route::post('/send-bulk', [WhatsAppController::class, 'sendBulk']);
 });
 
+Route::get('test-connect', function () {
+    return response()->json([
+        'message' => 'API is working',
+        'status' => 'connected',
+    ]);
+});
+
 Route::prefix('user')->middleware('auth:sanctum')->group(function () {
     Route::get('profile', [Profile::class, 'index']);
 });
