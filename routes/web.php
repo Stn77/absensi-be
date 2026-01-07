@@ -12,7 +12,7 @@ use App\Http\Controllers\WhatsAppController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/test', [TestController::class, 'index']);
@@ -29,18 +29,22 @@ Route::post('logout', [WebAuthController::class, 'logout'])->name('logout')->mid
 Route::get('dashboard', [Aione::class, 'dashboard'])->middleware('auth')->name('dashboard');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/absensi/siswa', [AbsensiController::class, 'index'])->name('admin.absensi.index');
     Route::get('/absensi/data/siswa', [MonolithAbsensi::class, 'getData'])->name('admin.absensi.data');
     Route::get('/analytics', [Dashboard::class, 'analytics']);
 });
 
 Route::middleware(['auth', 'role:guru|admin'])->group(function () {
+    Route::get('/absensi/siswa', [AbsensiController::class, 'index'])->name('admin.absensi.index');
 
 });
 
-Route::middleware(['auth', 'role:siswa|admin'])->group(function () {
+Route::middleware(['auth', 'role:siswa|admin|guru'])->group(function () {
     Route::get('izin', [IzinController::class, 'index'])->name('siswa.izin.create');
     Route::get('daftar-izin', [IzinController::class, 'daftarIzin'])->name('siswa.izin.list');
+});
+
+Route::middleware(['auth', 'role:siswa|admin'])->group(function () {
+    Route::post('izin-post', [IzinController::class, 'createIzin'])->name('siswa.izin.post');
 });
 
 Route::prefix('profile')->middleware('auth')->group(function () {
@@ -49,11 +53,11 @@ Route::prefix('profile')->middleware('auth')->group(function () {
     })->name('profile.index');
 });
 
-Route::prefix('whatsapp')->group(function () {
-    Route::get('/send', [WhatsAppController::class, 'index'])->name('whatsapp.index');
-    Route::post('/send-s', [WhatsAppController::class, 'send'])->name('whatsapp.send');
-    Route::post('/send-bulk', [WhatsAppController::class, 'sendBulk'])->name('whatsapp.send-bulk');
-});
+// Route::prefix('whatsapp')->group(function () {
+//     Route::get('/send', [WhatsAppController::class, 'index'])->name('whatsapp.index');
+//     Route::post('/send-s', [WhatsAppController::class, 'send'])->name('whatsapp.send');
+//     Route::post('/send-bulk', [WhatsAppController::class, 'sendBulk'])->name('whatsapp.send-bulk');
+// });
 
 Route::prefix('data/siswa')->middleware(['auth', 'role:admin|guru'])->group(function(){
     Route::get('/', [AkunSiswa::class, 'index'])->name('data.siswa.index');
