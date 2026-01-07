@@ -17,14 +17,28 @@ class Aione extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             if ($user->hasRole('admin')) {
-                return view('admin.dashboard');
+                return $this->adminDashboard();
             } else if ($user->hasRole('guru')) {
-                return view('guru.dashboard');
+                return $this->guruDashboard();
             } else if ($user->hasRole('siswa')) {
-                return view('siswa.dashboard');
+                return $this->siswaDashboard();
             }
         }
     }
 
+    public function adminDashboard()
+    {
+        return view('admin.dashboard');
+    }
+
+    public function siswaDashboard()
+    {
+        return view('siswa.dashboard');
+    }
+
+    public function guruDashboard()
+    {
+        return view('guru.dashboard');
+    }
 
 }
