@@ -12,7 +12,8 @@ class IzinModel extends Model
         'until_date',
         'jenis',
         'keperluan',
-        'catatan'
+        'catatan',
+        'file_pendukung'
     ];
 
     public function siswa()
