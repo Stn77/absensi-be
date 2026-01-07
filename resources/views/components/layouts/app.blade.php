@@ -14,6 +14,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"
         integrity="sha512-BMbq2It2D3J17/C7aRklzOODG1IQ3+MHw3ifzBHMBwGO/0yUqYmsStgBjI0z5EYlaDEFnvYV7gNYdD3vFLRKsA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css">
     {{--
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css"
@@ -307,6 +308,33 @@
         .u-name {
             font-weight: 500;
         }
+
+                /* Style untuk notifikasi */
+        #notification-area {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 350px;
+        }
+
+        .alert-auto-close {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert-auto-close .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .alert-auto-close .progress-bar {
+            transition: width 2s linear;
+        }
     </style>
     <link rel="stylesheet" href="{{asset('assets/css/custom-style.css')}}">
     @stack('style')
@@ -333,17 +361,17 @@
         </div>
 
         <ul class="sidebar-menu">
-            <x-pieces.nav-button role="admin" link="dashboard" icon="home" name="Dashboard" />
+            <x-pieces.nav-button role="admin|guru|siswa" link="dashboard" icon="home" name="Dashboard" />
 
             <x-pieces.nav-button role="admin" link="admin.absensi.index" icon="calendar-alt" name="Absensi Siswa" />
 
-            <x-pieces.nav-button role="admin" link="siswa.izin.create" icon="file-alt" name="Pengajuan Izin" />
+            <x-pieces.nav-button role="admin|siswa" link="siswa.izin.create" icon="file-alt" name="Pengajuan Izin" />
 
-            <x-pieces.nav-button role="admin" link="siswa.izin.list" icon="file-alt" name="Daftar Pengajuan Izin" />
+            <x-pieces.nav-button role="admin|siswa|guru" link="siswa.izin.list" icon="file-alt" name="Daftar Pengajuan Izin" />
 
             <x-pieces.sdbline />
 
-            <x-pieces.nav-button role="admin|siswa" link="data.siswa.index" icon="user" name="Akun Siswa" />
+            <x-pieces.nav-button role="admin" link="data.siswa.index" icon="user" name="Akun Siswa" />
 
 
         </ul>
@@ -360,8 +388,7 @@
     <main class="main-content">
         <div class="row content-card d-flex align-items-center justify-content-between mb-4">
             <div class="col-xl-4">
-                <h2>{{ \App\Helpers\GreetingHelper::getGreeting() }} <span
-                        class="u-name poppins-bold">{{Auth::user()->name}}</span></h2>
+                <h2 class="poppins-light">{{ \App\Helpers\GreetingHelper::getGreeting() }} <span class="u-name poppins-bold">{{Auth::user()->name}}</span></h2>
             </div>
             <div class="col-xl-4 d-flex justify-content-end">
                 <div class="dropdown">
@@ -376,6 +403,7 @@
                 </div>
             </div>
         </div>
+        <div id="notification-area"></div>
         {{$slot}}
 
     </main>
