@@ -46,6 +46,7 @@ class UserSeeder extends Seeder
             'name' => 'siswa-1',
             'kelas_id' => '1',
             'jurusan_id' => '1',
+            'no_telepon' => '088989208095'
         ]);
     }
 }

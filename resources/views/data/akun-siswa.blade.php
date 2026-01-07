@@ -151,6 +151,10 @@
             display: none;
         }
 
+        .bi {
+            color: white;
+        }
+
         /* Responsive styles */
         @media (max-width: 1220px) {
             .top {
