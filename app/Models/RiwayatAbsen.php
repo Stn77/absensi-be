@@ -11,8 +11,8 @@ class RiwayatAbsen extends Model
     use HasFactory;
     protected $fillable = ['siswa_id', 'tanggal', 'hari', 'is_late', 'waktu_absen', 'latitude', 'longitude', 'jenis'];
 
-    public function user()
+    public function siswa()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Siswa::class);
     }
 }
