@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
+/**
+ * implement siswa crud
+ * create data siswa, update data siswa, get data untuk profile,
+ * 
+ */
 class Siswa extends Controller
 {
     protected $excelImportService;

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Monolith\Siswa;
+namespace App\Http\Controllers\Monolith\Izin;
 
 use App\Http\Controllers\Controller;
 use App\Models\IzinModel;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -12,12 +13,12 @@ class IzinController extends Controller
 {
     public function index()
     {
-        return view('siswa.izin');
+        return view('izin.index');
     }
 
-    public function daftarIzin()
+    public function formIzin()
     {
-        return view('guru.izin-siswa');
+        return view('izin.form');
     }
 
     public function createIzin(Request $request)
@@ -73,5 +74,31 @@ class IzinController extends Controller
             ], 500);
         }
 
+    }
+
+    public function fetchIzizn(Request $request)
+    {
+        if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('guru')) {
+            return $this->fetchByGuruAdmin($request);
+        } else {
+            return $this->fetcBySiswa();
+        }
+    }
+
+    public function fetcBySiswa()
+    {
+        try{
+
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => 500,
+            ], 500);
+        }
+    }
+
+    public function fetchByGuruAdmin(Request $request)
+    {
+        
     }
 }

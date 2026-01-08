@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\Monolith\Auth\WebAuthController;
 use App\Http\Controllers\Monolith\TestController;
-use App\Http\Controllers\Monolith\Admin\AbsensiController;
+use App\Http\Controllers\Monolith\Absensi\AbsensiController;
 use App\Http\Controllers\Monolith\Admin\Dashboard;
 use App\Http\Controllers\Monolith\Aione;
 use App\Http\Controllers\Monolith\Data\Absensi as MonolithAbsensi;
 use App\Http\Controllers\Monolith\Data\Siswa as AkunSiswa;
-use App\Http\Controllers\Monolith\Siswa\IzinController;
+use App\Http\Controllers\Monolith\Izin\IzinController;
 use App\Http\Controllers\WhatsAppController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +30,6 @@ Route::get('dashboard', [Aione::class, 'dashboard'])->middleware('auth')->name('
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/absensi/data/siswa', [MonolithAbsensi::class, 'getData'])->name('admin.absensi.data');
-    Route::get('/analytics', [Dashboard::class, 'analytics']);
 });
 
 Route::middleware(['auth', 'role:guru|admin'])->group(function () {
@@ -39,8 +38,9 @@ Route::middleware(['auth', 'role:guru|admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:siswa|admin|guru'])->group(function () {
-    Route::get('izin', [IzinController::class, 'index'])->name('siswa.izin.create');
-    Route::get('daftar-izin', [IzinController::class, 'daftarIzin'])->name('siswa.izin.list');
+    Route::get('izin', [IzinController::class, 'formIzin'])->name('siswa.izin.create');
+    Route::get('daftar-izin', [IzinController::class, 'index'])->name('siswa.izin.list');
+    Route::get('daftar-izin-fetch', [IzinController::class, 'fetchIzin'])->name('siswa.izin.list.fetch');
 });
 
 Route::middleware(['auth', 'role:siswa|admin'])->group(function () {

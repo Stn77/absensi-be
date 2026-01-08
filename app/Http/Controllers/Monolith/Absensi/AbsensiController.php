@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Monolith\Admin;
+namespace App\Http\Controllers\Monolith\Absensi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Jurusan;
@@ -17,6 +17,6 @@ class AbsensiController extends Controller
         $kelas = Kelas::all();
         $jurusan = Jurusan::all();
 
-        return view('admin.absensi', compact('kelas', 'jurusan'));
+        return view('absensi.index', compact('kelas', 'jurusan'));
     }
 }

@@ -367,7 +367,7 @@
 
             <x-pieces.nav-button role="admin|siswa" link="siswa.izin.create" icon="file-alt" name="Pengajuan Izin" />
 
-            <x-pieces.nav-button role="admin|siswa|guru" link="siswa.izin.list" icon="file-alt" name="Daftar Pengajuan Izin" />
+            <x-pieces.nav-button role="admin|siswa|guru" link="siswa.izin.list" icon="file-alt" name="Daftar Izin" />
 
             <x-pieces.sdbline />
 
