@@ -19,6 +19,14 @@ class AnrdAuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        if($user->hasRoles('admin')) return response()->json([
+                'message' => 'Admin tidak boleh masuk'
+        ], 401);
+
+        if($user->hasRoles('guru')) return response()->json([
+                'message' => 'Guru tidak boleh masuk'
+        ], 401);
+
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'Email atau password salah'
