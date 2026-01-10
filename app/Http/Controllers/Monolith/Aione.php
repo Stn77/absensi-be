@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Monolith;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,4 +42,27 @@ class Aione extends Controller
         return view('guru.dashboard');
     }
 
+    public function profile()
+    {
+        $idUser = Auth::user()->id;
+        $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+
+            $data = Auth::user();
+            return view('aio.profile', compact(['data']));
+
+        } else if ($user->hasRole('guru')) {
+
+            $data = User::with(['guru'])->find($idUser);
+            return view('aio.profile', compact(['data']));
+
+        } else if ($user->hasRole('siswa')) {
+
+            $data = User::with(['siswa', 'siswa.kelas', 'siswa.jurusan'])->find($idUser);
+            return view('aio.profile', compact(['data']));
+
+        }
+
+    }
 }

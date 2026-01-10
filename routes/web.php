@@ -48,9 +48,7 @@ Route::middleware(['auth', 'role:siswa|admin'])->group(function () {
 });
 
 Route::prefix('profile')->middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('profile.index');
-    })->name('profile.index');
+    Route::get('/', [Aione::class, 'profile'])->name('profile.index');
 });
 
 // Route::prefix('whatsapp')->group(function () {

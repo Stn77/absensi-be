@@ -397,7 +397,7 @@
                         <i class="fas fa-user fa-lg text-white rounded-circle"></i>
                     </button>
                     <ul class="dropdown-menu poppins-regular">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{route('profile.index')}}">Profile</a></li>
                         <li><button class="dropdown-item poppins-semibold" id="logout">Logout</button></li>
                     </ul>
                 </div>
