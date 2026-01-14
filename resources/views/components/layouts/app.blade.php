@@ -361,17 +361,17 @@
         </div>
 
         <ul class="sidebar-menu">
-            <x-pieces.nav-button role="admin|guru|siswa" link="dashboard" icon="home" name="Dashboard" />
+            <x-pieces.nav-button roleUser="admin|guru|siswa" link="dashboard" icon="home" name="Dashboard" />
 
-            <x-pieces.nav-button role="admin" link="admin.absensi.index" icon="calendar-alt" name="Absensi Siswa" />
+            <x-pieces.nav-button roleUser="admin" link="admin.absensi.index" icon="calendar-alt" name="Absensi Siswa" />
 
-            <x-pieces.nav-button role="admin|siswa" link="siswa.izin.create" icon="file-alt" name="Pengajuan Izin" />
+            <x-pieces.nav-button roleUser="admin|siswa" link="siswa.izin.create" icon="file-alt" name="Pengajuan Izin" />
 
-            <x-pieces.nav-button role="admin|siswa|guru" link="siswa.izin.list" icon="file-alt" name="Daftar Izin" />
+            <x-pieces.nav-button roleUser="admin|siswa|guru" link="siswa.izin.list" icon="file-alt" name="Daftar Izin" />
 
             <x-pieces.sdbline />
 
-            <x-pieces.nav-button role="admin" link="data.siswa.index" icon="user" name="Akun Siswa" />
+            <x-pieces.nav-button roleUser="admin" link="data.siswa.index" icon="user" name="Akun Siswa" />
 
 
         </ul>

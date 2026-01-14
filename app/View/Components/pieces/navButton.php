@@ -15,7 +15,7 @@ class navButton extends Component
         public string $link,
         public string $icon,
         public string $name,
-        public string $role
+        public string $roleUser
     )
     {
         //
