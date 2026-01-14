@@ -19,11 +19,11 @@ class AnrdAuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if($user->hasRoles('admin')) return response()->json([
+        if($user->hasRole('admin')) return response()->json([
                 'message' => 'Admin tidak boleh masuk'
         ], 401);
 
-        if($user->hasRoles('guru')) return response()->json([
+        if($user->hasRole('guru')) return response()->json([
                 'message' => 'Guru tidak boleh masuk'
         ], 401);
 
@@ -33,7 +33,6 @@ class AnrdAuthController extends Controller
             ], 401);
         }
 
-        // ⭐ PENTING: Buat token menggunakan Sanctum
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
