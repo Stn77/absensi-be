@@ -14,7 +14,8 @@ class navButton extends Component
     public function __construct(
         public string $link,
         public string $icon,
-        public string $name
+        public string $name,
+        public string $role
     )
     {
         //
