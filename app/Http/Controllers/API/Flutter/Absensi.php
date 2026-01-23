@@ -40,15 +40,18 @@ class Absensi extends Controller
         $siswa = $user->siswa()->first();
         $jenis = 'datang';
 
-        $riwayatAbsenHistory = RiwayatAbsen::where('siswa_id', $siswa->id)->where('tanggal', $request->tanggal);
+        // Log::debug($user);
+        Log::debug($siswa);
 
-        if($riwayatAbsenHistory->where('jenis', 'datang')->exists()) {
+        $riwayatAbsenHistory = RiwayatAbsen::where('siswa_id', $siswa->id)->where('tanggal', $request->tanggal)->latest()->first();
+
+        if($riwayatAbsenHistory && $riwayatAbsenHistory->jenis === 'datang') {
             $jenis = 'pulang';
         }
 
-        if($riwayatAbsenHistory->where('jenis', 'pulang')->exists()) {
+        else if($riwayatAbsenHistory && $riwayatAbsenHistory->jenis === 'pulang') {
             return response()->json([
-                'status' => '200',
+                'status' => '201',
                 'message' => 'anda sudah melakukan absen hari ini'
             ], 201);
         }
@@ -64,9 +67,9 @@ class Absensi extends Controller
             'jenis' => $jenis,
         ]);
 
-        $phone = $this->fonte->formatPhone($siswa->no_telepon);
+        // $phone = $this->fonte->formatPhone($siswa->no_telepon);
 
-        $message = $this->fonte->sendMessage($phone, 'telah absen pada '.$jenis.' ' . time());
+        // $message = $this->fonte->sendMessage($phone, 'telah absen pada '.$jenis.' ' . time());
 
         return response()->json([
             'status' => '200',
