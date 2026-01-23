@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('jenis', ['datang_terlambat', 'sakit', 'pulang_awal', 'lain_lain'])->default('lain_lain');
             $table->string('keperluan');
             $table->text('catatan');
-            $table->string('file_pendukung');
+            $table->string('file_pendukung')->nullable();
             $table->timestamps();
         });
     }
