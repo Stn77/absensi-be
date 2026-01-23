@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Monolith;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\WhatsAppController;
+use App\Models\RiwayatAbsen;
 use App\Services\FonnteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,8 @@ class TestController extends Controller
 
     public function index()
     {
-        $this->createIzin();
+        return $this->checkAbsen();
+
     }
 
     // public function test_send_message()
@@ -44,9 +46,31 @@ class TestController extends Controller
     //     }
     // }
 
-    public function createIzin()
+    // public function createIzin()
+    // {
+    //     $siswa = Auth::user()->siswa->id;
+    //     dd($siswa);
+    // }
+
+    public function checkAbsen()
     {
-        $siswa = Auth::user()->siswa->id;
-        dd($siswa);
+        $idSiswa = Auth::user()->siswa->id;
+        $riwayatAbsenHistory = RiwayatAbsen::where('siswa_id', $idSiswa)->where('tanggal', now()->format('Y-m-d'))->latest()->first();
+
+        dd($riwayatAbsenHistory);
+
+        if ($riwayatAbsenHistory->jenis === 'datang') {
+            // echo $riwayatAbsenHistory->jenis;
+            echo 'sudah absen datang';
+            return;
+        }
+
+        else if ($riwayatAbsenHistory->jenis === 'pulang') {
+            // echo $riwayatAbsenHistory->jenis;
+            echo 'sudah absen pulang';
+            return;
+        }
+
+        return 'belum absen';
     }
 }
