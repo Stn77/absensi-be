@@ -17,6 +17,18 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        /**
+        * role assigment
+        * admin
+        * guru
+        * siswa
+        */
+
+        /**
+         * membuat role dan user default
+         * role dibuat dengan package spatie/laravel-permission
+         */
+
         $admin = Role::create(['name' => 'admin']);
         $guru = Role::create(['name' => 'guru']);
         $siswa = Role::create(['name' => 'siswa']);
