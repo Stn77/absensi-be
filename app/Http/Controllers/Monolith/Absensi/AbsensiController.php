@@ -19,4 +19,12 @@ class AbsensiController extends Controller
 
         return view('absensi.index', compact('kelas', 'jurusan'));
     }
+
+    public function exportPage()
+    {
+        $kelas = Kelas::all();
+        $jurusan = Jurusan::all();
+
+        return view('absensi.export', compact('kelas', 'jurusan'));
+    }
 }

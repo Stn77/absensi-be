@@ -206,11 +206,39 @@
     </style>
     @endpush
     <div class="container-fluid py-3">
-        <div class="d-flex flex-column">
-            <div class="d-flex w-100 mb-3">
+        <div class="border my-2 row">
+            <div class="col-xl-6 row d-flex align-items-center">
+                <div class="col-xl-4 col-lg-6">
+                    <label for="kelasFilter" class="form-label">Kelas</label>
+                    <select name="kelasFilter" id="kelasFilter" class="form-select form-control form-control-sm">
+                        <option value="" selected disabled>Pilih Kelas</option>
+                        @foreach ($kelas as $kl)
+                        <option value="{{$kl->id}}">{{strtoupper($kl->name)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-xl-4 col-lg-6">
+                    <label for="jurusanFilter" class="form-label">Jurusan</label>
+                    <select name="jurusanFilter" id="jurusanFilter" class="form-select form-control form-control-sm">
+                        <option value="" selected disabled>Pilih Jurusan</option>
+                        @foreach ($jurusan as $jr)
+                        <option value="{{$jr->id}}">{{strtoupper($jr->name)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-xl-4 col-lg-6 mt-4 d-flex gap-2">
+                    <button class="btn btn-primary btn-sm">Filter</button>
+                    <button class="btn btn-secondary btn-sm">Reset</button>
+                </div>
+            </d>
+            <div class="col-xl-6 d-flex align-items-center justify-content-end">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmodal">
                     <i class="bi bi-plus"></i> Tambah Data
                 </button>
+            </div>
+        </div>
+        <div class="d-flex flex-column">
+            <div class="d-flex w-100 mb-3">
             </div>
             <div class="table-responsive">
                 <table class="table mt-2 table-striped table-bordered" id="akun-siswa">

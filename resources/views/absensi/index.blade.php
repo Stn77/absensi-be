@@ -5,7 +5,7 @@
             <form action="" class="col-xl-6 row d-flex align-items-center">
                 <div class="col-xl-4 col-lg-6">
                     <label for="kelasFilter" class="form-label">Kelas</label>
-                    <select name="kelasFilter" id="kelasFilter" class="form-select form-control form-control-sm">$kl
+                    <select name="kelasFilter" id="kelasFilter" class="form-select form-control form-control-sm">
                         <option value="" selected disabled>Pilih Kelas</option>
                         @foreach ($kelas as $kl)
                         <option value="{{$kl->id}}">{{strtoupper($kl->name)}}</option>
@@ -28,18 +28,22 @@
             </form>
             <div class="col-xl-6 d-flex align-items-center justify-content-end">
                 <div>
-                    <button class="btn btn-primary ">Export</button>
+                    <a href="{{route('admin.absensi.export-page')}}" class="btn btn-primary " data-bs-toggle="exportMode" data-bs-target="hehe">Export</a>
                 </div>
             </div>
         </div>
 
-        <div class="d-flex flex-column">
-            <div class="table-responsive">text
+        <div class="d-flex flex-column mt-3">
+            <div class="table-responsive">
                 <table class="table" id="absensiswa">
                     <thead></thead>
                 </table>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade" id="exportMode" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+
     </div>
 
     @push('script')

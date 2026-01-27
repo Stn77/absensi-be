@@ -34,7 +34,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:guru|admin'])->group(function () {
     Route::get('/absensi/siswa', [AbsensiController::class, 'index'])->name('admin.absensi.index');
-
+    Route::get('/absensi/export', [AbsensiController::class, 'exportPage'])->name('admin.absensi.export-page');
+    
 });
 
 Route::middleware(['auth', 'role:siswa|admin|guru'])->group(function () {
