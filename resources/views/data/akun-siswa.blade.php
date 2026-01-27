@@ -230,7 +230,7 @@
                     <button class="btn btn-primary btn-sm">Filter</button>
                     <button class="btn btn-secondary btn-sm">Reset</button>
                 </div>
-            </d>
+            </div>
             <div class="col-xl-6 d-flex align-items-center justify-content-end">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmodal">
                     <i class="bi bi-plus"></i> Tambah Data
