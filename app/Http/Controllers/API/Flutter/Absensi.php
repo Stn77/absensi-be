@@ -51,8 +51,8 @@ class Absensi extends Controller
 
         else if($riwayatAbsenHistory && $riwayatAbsenHistory->jenis === 'pulang') {
             return response()->json([
-                'status' => '201',
-                'message' => 'anda sudah melakukan absen hari ini'
+                'status' => '202',
+                'message' => 'anda sudah melakukan absen hari ini',
             ], 201);
         }
 
