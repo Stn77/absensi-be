@@ -14,6 +14,6 @@ class SiswaSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(20)->roleSiswa()->has(Siswa::factory())->create();
+        User::factory()->count(50)->roleSiswa()->has(Siswa::factory())->create();
     }
 }

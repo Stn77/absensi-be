@@ -25,7 +25,7 @@ class RiwayatAbsenFactory extends Factory
             'waktu_absen' => $tanggal->format('H:i:s'),
             'latitude' => fake()->latitude(-6.200000, -6.300000),
             'longitude' => fake()->longitude(106.800000, 106.900000),
-            'jenis' => fake()->randomElement(['masuk', 'pulang']),
+            'jenis' => fake()->randomElement(['datang', 'pulang']),
         ];
     }
 }
