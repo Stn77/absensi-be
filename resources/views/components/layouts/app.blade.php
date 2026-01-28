@@ -333,7 +333,7 @@
         }
 
         .alert-auto-close .progress-bar {
-            transition: width 2s linear;
+            transition: width 3s linear;
         }
     </style>
     <link rel="stylesheet" href="{{asset('assets/css/custom-style.css')}}">
@@ -449,7 +449,7 @@
         });
     </script>
     <script>
-        function showNotifCreate(message, type = 'success', duration = 5000){
+        function showNotifCreate(message, type = 'success', duration = 3000){
             // Tentukan kelas alert berdasarkan type
             let alertClass;
             switch(type) {
