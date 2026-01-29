@@ -365,7 +365,7 @@
 
             <x-pieces.nav-button roleUser="admin" link="admin.absensi.index" icon="calendar-alt" name="Absensi Siswa" />
 
-            <x-pieces.nav-button roleUser="admin|siswa" link="siswa.izin.create" icon="file-alt" name="Pengajuan Izin" />
+            <x-pieces.nav-button roleUser="siswa" link="siswa.izin.create" icon="file-alt" name="Pengajuan Izin" />
 
             <x-pieces.nav-button roleUser="admin|siswa|guru" link="siswa.izin.list" icon="file-alt" name="Daftar Izin" />
 
