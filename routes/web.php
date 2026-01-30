@@ -35,7 +35,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:guru|admin'])->group(function () {
     Route::get('/absensi/siswa', [AbsensiController::class, 'index'])->name('admin.absensi.index');
     Route::get('/absensi/export', [AbsensiController::class, 'exportPage'])->name('admin.absensi.export-page');
-    
+    Route::get('absensi/exported', [MonolithAbsensi::class, 'export'])->name('admin.absensi.exported');
 });
 
 Route::middleware(['auth', 'role:siswa|admin|guru'])->group(function () {
@@ -69,4 +69,6 @@ Route::prefix('data/siswa')->middleware(['auth', 'role:admin|guru'])->group(func
     Route::post('/store', [AkunSiswa::class, 'store'])->name('akun.siswa.store');
     Route::post('/import', [AkunSiswa::class, 'import'])->name('data.siswa.import');
     Route::get('/template', [AkunSiswa::class, 'getTemplate'])->name('data.siswa.template');
+
+    Route::get('/create', [AkunSiswa::class, 'create'])->name('data.siswa.create');
 });

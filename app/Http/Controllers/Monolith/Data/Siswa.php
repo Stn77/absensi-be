@@ -19,7 +19,7 @@ use Yajra\DataTables\DataTables;
 /**
  * implement siswa crud
  * create data siswa, update data siswa, get data untuk profile,
- * 
+ *
  */
 class Siswa extends Controller
 {
@@ -128,6 +128,13 @@ class Siswa extends Controller
                 'errors' => []
             ], 500);
         }
+    }
+
+    public function create()
+    {
+        $jurusan = Jurusan::all();
+        $kelas = Kelas::all();
+        return view('data.siswa-create', compact('jurusan', 'kelas'));
     }
 
     public function store(Request $request)

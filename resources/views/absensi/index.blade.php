@@ -115,7 +115,7 @@
                         width: '5%',
                         render: function(data, type, row){
                             if(data === 'Tepat Waktu'){
-                                return `<span class="badge text-bg-primary" >${data}</span>`
+                                return `<span class="badge text-bg-primary text-white" >${data}</span>`
                             } else {
                                 return `<span class="badge text-bg-danger" >${data}</span>`
                             }
