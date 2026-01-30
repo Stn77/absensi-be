@@ -12,6 +12,7 @@ class SiswaSeeder extends Seeder
 {
     public function run(): void
     {
+
         $siswaRole = Role::firstOrCreate(['name' => 'siswa']);
 
         $fixedStudents = [
@@ -54,5 +55,7 @@ class SiswaSeeder extends Seeder
             ->roleSiswa()
             ->has(Siswa::factory())
             ->create();
+
+        User::factory()->count(50)->roleSiswa()->has(Siswa::factory())->create();
     }
 }
