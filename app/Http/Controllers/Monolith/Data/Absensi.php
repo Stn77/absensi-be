@@ -132,7 +132,6 @@ class Absensi extends Controller
 
         $filename = $filename . '.pdf';
 
-        // Untuk API response, gunakan stream dengan proper headers
         return $pdf->stream($filename);
     }
 
